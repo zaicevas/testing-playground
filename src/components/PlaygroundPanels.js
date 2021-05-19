@@ -4,8 +4,9 @@ import { useState } from 'react';
 import Query from './Query';
 import Result from './Result';
 import TabButton from './TabButton';
+import TestTab from './TestTab';
 
-const panels = ['Query', 'Events'];
+const panels = ['Query', 'Events', 'Test'];
 
 const DomEvents = React.lazy(() => import('./DomEvents'));
 
@@ -19,7 +20,7 @@ function Paper({ children }) {
 
 function PlaygroundPanels({ state, dispatch }) {
   const { query, result } = state;
-  const [panel, setPanel] = useState(panels[0]);
+  const [panel, setPanel] = useState(panels[2]);
 
   return (
     <>
@@ -51,6 +52,11 @@ function PlaygroundPanels({ state, dispatch }) {
           </Paper>
         )}
         {panel === panels[1] && <DomEvents />}
+        {panel === panels[2] && (
+          <div className="editor p-4 gap-4 md:gap-8 md:h-56 flex-auto">
+            <TestTab dispatch={dispatch} />
+          </div>
+        )}
       </Suspense>
     </>
   );

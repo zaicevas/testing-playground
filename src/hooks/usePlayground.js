@@ -45,6 +45,10 @@ function reducer(state, action, exec) {
       return { ...state, queryEditor: action.editor };
     }
 
+    case 'SET_TEST_EDITOR': {
+      return { ...state, testEditor: action.editor };
+    }
+
     case 'SET_SANDBOX_FRAME': {
       exec({ type: 'APPLY_SETTINGS' });
       exec({ type: 'UPDATE_SANDBOX', immediate: true });
@@ -78,6 +82,22 @@ function reducer(state, action, exec) {
         ...state,
         dirty: true,
         query: action.query,
+      };
+    }
+
+    case 'SET_TEST': {
+      if (action.origin !== 'EDITOR') {
+        exec({ type: 'UPDATE_EDITOR', editor: 'test' });
+      }
+
+      if (action.origin !== 'SANDBOX') {
+        exec({ type: 'UPDATE_SANDBOX', immediate });
+      }
+
+      return {
+        ...state,
+        dirty: true,
+        test: action.test,
       };
     }
 
@@ -191,6 +211,11 @@ const effectMap = {
 
       case 'query': {
         state.queryEditor?.setValue(state.query);
+        break;
+      }
+
+      case 'test': {
+        state.testEditor?.setValue(state.test);
         break;
       }
 
