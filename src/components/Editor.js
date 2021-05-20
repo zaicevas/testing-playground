@@ -297,7 +297,7 @@ function Editor(props) {
       editor.current.off('keyup', autoComplete);
       editor.current.off('blur', handleBlur);
     };
-  }, [mode, onLoad, initialValue]);
+  }, [mode, onLoad, initialValue, isTest]);
 
   useEffect(() => {
     editor.current.onChange = onChange;
