@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import Editor from './Editor';
 
 function QueryEditor(props) {
-  const { dispatch, initialValue } = props;
+  const { dispatch, initialValue, isTest } = props;
 
   const onLoad = useCallback(
     (editor) => dispatch({ type: 'SET_QUERY_EDITOR', editor }),
@@ -27,6 +27,7 @@ function QueryEditor(props) {
         initialValue={initialValue}
         onLoad={onLoad}
         onChange={onChange}
+        isTest={isTest}
       />
     </div>
   );

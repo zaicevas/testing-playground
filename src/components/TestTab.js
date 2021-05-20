@@ -5,7 +5,7 @@ function TestTab({ dispatch }) {
   return (
     <div className="relative h-full w-full flex flex-col">
       <div className="query-editor flex-auto relative">
-        <QueryEditor initialValue="" dispatch={dispatch} />
+        <QueryEditor isTest initialValue="" dispatch={dispatch} />
       </div>
     </div>
   );
