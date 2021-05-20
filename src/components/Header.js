@@ -3,6 +3,7 @@ import icon from 'url:~/public/36-production.png';
 import { links } from '../constants';
 import { Menu, MenuList, MenuButton, MenuLink, MenuPopover } from './Menu';
 import { Modal, ModalContents, ModalOpenButton } from './Modal';
+import NewTestNameSelect from './NewTestNameSelect';
 
 import {
   KebabHorizontalIcon,
@@ -54,6 +55,31 @@ function Header({
         </div>
 
         <div className="flex items-center text-sm h-full relative">
+          <Menu>
+            <MenuButton>
+              <CodeIcon size={12} />
+              <span>build test</span>
+            </MenuButton>
+
+            <MenuList>
+              <Modal>
+                <ModalOpenButton>
+                  <MenuLink as="button">
+                    <FileIcon size={12} />
+                    <span>New</span>
+                  </MenuLink>
+                </ModalOpenButton>
+                <ModalContents>
+                  <NewTestNameSelect />
+                </ModalContents>
+              </Modal>
+              {/* Bachelors: proper dispatch  */}
+              <MenuLink as="button" onClick={() => dispatch({ type: 'RESET' })}>
+                <PaperAirplaneIcon size={12} />
+                <span>Run</span>
+              </MenuLink>
+            </MenuList>
+          </Menu>
           <Menu>
             <MenuButton>
               {status === 'saving' ? (
