@@ -19,7 +19,7 @@ function Paper({ children }) {
 }
 
 function PlaygroundPanels({ state, dispatch }) {
-  const { query, result } = state;
+  const { query, result, test } = state;
   const [panel, setPanel] = useState(panels[2]);
 
   return (
@@ -54,7 +54,7 @@ function PlaygroundPanels({ state, dispatch }) {
         {panel === panels[1] && <DomEvents />}
         {panel === panels[2] && (
           <div className="editor p-4 gap-4 md:gap-8 md:h-56 flex-auto">
-            <TestTab dispatch={dispatch} />
+            <TestTab test={test} dispatch={dispatch} />
           </div>
         )}
       </Suspense>
