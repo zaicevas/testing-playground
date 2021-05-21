@@ -70,7 +70,11 @@ function Header({
                   </MenuLink>
                 </ModalOpenButton>
                 <ModalContents>
-                  <NewTestNameSelect />
+                  <NewTestNameSelect
+                    onCreateClick={(testName) => {
+                      dispatch({ type: 'SET_TEST', test: testName });
+                    }}
+                  />
                 </ModalContents>
               </Modal>
               {/* Bachelors: proper dispatch  */}

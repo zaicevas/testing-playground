@@ -5,19 +5,24 @@ function QueryEditor(props) {
   const { dispatch, initialValue, isTest } = props;
 
   const onLoad = useCallback(
-    (editor) => dispatch({ type: 'SET_QUERY_EDITOR', editor }),
-    [dispatch],
+    (editor) =>
+      dispatch({
+        type: isTest ? 'SET_TEST_EDITOR' : 'SET_QUERY_EDITOR',
+        editor,
+      }),
+    [dispatch, isTest],
   );
 
   const onChange = useCallback(
     (query, { origin }) =>
       dispatch({
-        type: 'SET_QUERY',
-        query,
+        type: isTest ? 'SET_TEST' : 'SET_QUERY',
+        query: isTest ? '' : query,
+        test: isTest ? query : '',
         origin: 'EDITOR',
         immediate: origin === 'user',
       }),
-    [dispatch],
+    [dispatch, isTest],
   );
 
   return (
