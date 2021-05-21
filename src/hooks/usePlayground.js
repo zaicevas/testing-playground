@@ -94,10 +94,14 @@ function reducer(state, action, exec) {
         exec({ type: 'UPDATE_SANDBOX', immediate });
       }
 
+      const test = `it('${action.test}', () => {
+
+})`;
+
       return {
         ...state,
         dirty: true,
-        test: action.test,
+        test,
       };
     }
 
