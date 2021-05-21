@@ -37,13 +37,16 @@ export const initialValues = {
 `.trim(),
 
   query: `
-// Query your elements here, preferably with 
+// Query your elements here, preferably with
 // \`screen.getBy…(…)\`. If you can't use
 // screen use \`container.querySelector(…)\`.
 
 // container.querySelector('input')
 screen.getByRole('button')
 `.trim(),
+
+  test: '',
+  tab: 'Test',
 };
 
 export const queries = [

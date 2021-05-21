@@ -12,6 +12,15 @@ import url from '../lib/state/url';
 
 let history;
 
+const insert = (arr, index, newItem) => [
+  // part of the array before the specified index
+  ...arr.slice(0, index),
+  // inserted item
+  newItem,
+  // part of the array after the specified index
+  ...arr.slice(index),
+];
+
 // Note: don't place heavy tasks in the reducer, add them to the effects!
 // the reducer is run twice (by react design), while the effect is only run once
 function reducer(state, action, exec) {
@@ -34,6 +43,8 @@ function reducer(state, action, exec) {
         gistVersion: undefined,
         markup: defaultValues.markup,
         query: defaultValues.query,
+        test: defaultValues.test,
+        tab: defaultValues.tab,
       };
     }
 
@@ -95,13 +106,46 @@ function reducer(state, action, exec) {
       }
 
       const test = `it('${action.test}', () => {
-
 })`;
 
       return {
         ...state,
         dirty: true,
         test,
+      };
+    }
+
+    case 'ADD_TEST_QUERY': {
+      if (action.origin !== 'EDITOR') {
+        exec({ type: 'UPDATE_EDITOR', editor: 'test' });
+      }
+
+      if (action.origin !== 'SANDBOX') {
+        exec({ type: 'UPDATE_SANDBOX', immediate });
+      }
+
+      if (!state.test || state.tab !== 'Test') {
+        return state;
+      }
+
+      const lines = state.test.split('\n');
+      const testWithAppendedQuery = insert(
+        lines,
+        lines.length - 1,
+        `\t${action.query}`,
+      ).join('\n');
+
+      return {
+        ...state,
+        dirty: true,
+        test: testWithAppendedQuery,
+      };
+    }
+
+    case 'SET_TAB': {
+      return {
+        ...state,
+        tab: action.tab,
       };
     }
 

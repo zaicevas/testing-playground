@@ -30,7 +30,10 @@ function PlaygroundPanels({ state, dispatch }) {
             {panels.map((panelName) => (
               <TabButton
                 key={panelName}
-                onClick={() => setPanel(panelName)}
+                onClick={() => {
+                  setPanel(panelName);
+                  dispatch({ type: 'SET_TAB', tab: panelName });
+                }}
                 active={panelName === panel}
               >
                 {panelName}

@@ -82,6 +82,11 @@ function Preview({ markup, variant, forwardedRef, dispatch }) {
             query: suggestion.snippet,
             origin: 'SANDBOX',
           });
+          dispatch({
+            type: 'ADD_TEST_QUERY',
+            query: suggestion.snippet,
+            origin: 'SANDBOX',
+          });
           break;
         }
 
