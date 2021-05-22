@@ -77,11 +77,6 @@ function Header({
                   />
                 </ModalContents>
               </Modal>
-              {/* Bachelors: proper dispatch  */}
-              <MenuLink as="button" onClick={() => dispatch({ type: 'RESET' })}>
-                <PaperAirplaneIcon size={12} />
-                <span>Run</span>
-              </MenuLink>
             </MenuList>
           </Menu>
           <Menu>
