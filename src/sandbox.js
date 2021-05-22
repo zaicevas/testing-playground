@@ -182,6 +182,7 @@ function onMessage({ source, data }) {
   switch (data.type) {
     case 'UPDATE_SANDBOX': {
       state.query = data.query;
+      state.test = data.test;
       state.markup = data.markup;
       break;
     }
@@ -193,7 +194,15 @@ function onMessage({ source, data }) {
     }
   }
 
-  updateSandbox(state.rootNode, state.markup, state.query);
+  if (!data.isTest) {
+    updateSandbox(state.rootNode, state.markup, state.query);
+    return;
+  }
+
+  const lines = state.test.split('\n');
+  const testWithoutItBlock = lines.slice(1, lines.length - 1).join('\n');
+
+  updateSandbox(state.rootNode, state.markup, testWithoutItBlock);
 }
 
 window.addEventListener('message', onMessage, false);
