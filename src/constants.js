@@ -99,6 +99,74 @@ export const messages = [
   },
 ];
 
+export const userEventQueries = [
+  {
+    name: 'click',
+    desc: 'Clicks element',
+    code: 'userEvent.click(:query)',
+  },
+  {
+    name: 'dblClick',
+    desc: 'Clicks element twice',
+    code: 'userEvent.dbClick(:query)',
+  },
+  {
+    name: 'type',
+    desc: 'Types',
+    code: "userEvent.type(:query, ':input')",
+    withInput: true,
+  },
+  {
+    name: 'keyboard',
+    desc: 'Simulates keyboard events',
+    code: "userEvent.keyboard(':input')",
+    withInput: true,
+  },
+  // {
+  //   name: 'upload',
+  //   desc: 'Upload',
+  //   code: "userEvent.upload(:query, ':input')",
+  // },
+  {
+    name: 'clear',
+    desc: 'Clear',
+    code: 'userEvent.clear(:query)',
+  },
+  {
+    name: 'selectOptions',
+    desc: 'Select options',
+    code: "userEvent.selectOptions(:query, ':input')",
+    withInput: true,
+  },
+  {
+    name: 'deselectOptions',
+    desc: 'Deselect options',
+    code: "userEvent.deselectOptions(:query, ':input')",
+    withInput: true,
+  },
+  {
+    name: 'tab',
+    desc: 'Tab',
+    code: 'userEvent.tab()',
+  },
+  {
+    name: 'hover',
+    desc: 'Hover',
+    code: 'userEvent.hover(:query)',
+  },
+  {
+    name: 'unhover',
+    desc: 'Unhover',
+    code: 'userEvent.unhover(:query)',
+  },
+  {
+    name: 'paste',
+    desc: 'Paste',
+    code: "userEvent.paste(:query, ':input')",
+    withInput: true,
+  },
+];
+
 export const links = {
   testing_library_docs: {
     title: 'Introduction',

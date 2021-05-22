@@ -72,7 +72,11 @@ function Header({
                 <ModalContents>
                   <NewTestNameSelect
                     onCreateClick={(testName) => {
-                      dispatch({ type: 'SET_TEST', test: testName });
+                      dispatch({
+                        type: 'SET_TEST',
+                        test: testName,
+                        origin: 'SANDBOX',
+                      });
                     }}
                   />
                 </ModalContents>
