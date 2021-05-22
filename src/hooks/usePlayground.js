@@ -128,11 +128,15 @@ function reducer(state, action, exec) {
         return state;
       }
 
-      const lines = state.test.split('\n');
+      const currentTestLines = state.test.split('\n');
+      const queryLines = action.query.split('\n');
+      const indentedQueryLines = queryLines.map((line) => `\t${line}`);
+      const indentedQuery = indentedQueryLines.join('\n');
+
       const testWithAppendedQuery = insert(
-        lines,
-        lines.length - 1,
-        `\t${action.query}`,
+        currentTestLines,
+        currentTestLines.length - 1,
+        `${indentedQuery}`,
       ).join('\n');
 
       return {
@@ -224,6 +228,8 @@ const populateSandbox = (state, effect, dispatch) => {
     type: 'UPDATE_SANDBOX',
     markup: state.markup,
     query: state.settings.autoRun || effect.immediate ? state.query : '',
+    test: state.settings.autoRun || effect.immediate ? state.test : '',
+    isTest: state.tab === 'Test',
   });
 };
 
