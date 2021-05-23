@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import QueryEditor from './QueryEditor';
+import QueryOutput from './QueryOutput';
 
 function TestTab({ dispatch, test }) {
   const [initialValue] = useState(test);
@@ -9,6 +10,7 @@ function TestTab({ dispatch, test }) {
       <div className="query-editor flex-auto relative">
         <QueryEditor isTest initialValue={initialValue} dispatch={dispatch} />
       </div>
+      <QueryOutput isTest dispatch={dispatch} />
     </div>
   );
 }
