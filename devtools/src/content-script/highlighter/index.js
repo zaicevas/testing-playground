@@ -77,6 +77,7 @@ export default function setupHighlighter({
   }
 
   function stopInspecting() {
+    blockEvents = false;
     hideOverlay();
     removeEventListeners(view);
     iframesListeningTo.forEach(function (frame) {

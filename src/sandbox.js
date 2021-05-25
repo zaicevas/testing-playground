@@ -107,10 +107,17 @@ function Sandbox() {
   return (
     <div
       className="pr-1 relative w-screen h-screen overflow-hidden"
-      onMouseEnter={() => {
+      onMouseEnter={(event) => {
+        const isTriggeredByRunningTest =
+          event.clientX === 0 && event.clientY === 0;
+
+        if (isTriggeredByRunningTest) {
+          return;
+        }
+
         state.pointerInside = true;
         state.highlighter?.clear();
-        state.highlighter?.start({ stopOnClick: false, blockEvents: false });
+        state.highlighter?.start({ stopOnClick: false, blockEvents: true });
       }}
       onMouseLeave={() => {
         state.highlighter?.stop();
@@ -195,20 +202,15 @@ function onMessage({ source, data }) {
     }
   }
 
-  if (!data.isTest) {
+  if (!data.isTest || !data.manualInvocation) {
     updateSandbox(state.rootNode, state.markup, state.query, false);
     return;
   }
 
   const lines = state.test.split('\n');
-  const testWithoutItBlock = lines.slice(1, lines.length - 1).join('\n');
+  const testWithoutItBlock = lines.slice(1, lines.length - 1).join('\n'); // sitas runninasi kai markupas pasikeicia
 
-  updateSandbox(
-    state.rootNode,
-    state.markup,
-    testWithoutItBlock,
-    data.manualInvocation,
-  );
+  updateSandbox(state.rootNode, state.markup, testWithoutItBlock, true);
 }
 
 window.addEventListener('message', onMessage, false);
