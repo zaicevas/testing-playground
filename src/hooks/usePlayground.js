@@ -112,6 +112,20 @@ function reducer(state, action, exec) {
       };
     }
 
+    case 'SET_SHOW_TEST_RESULT': {
+      return {
+        ...state,
+        showTestResult: true,
+      };
+    }
+
+    case 'HIDE_SHOW_TEST_RESULT': {
+      return {
+        ...state,
+        showTestResult: false,
+      };
+    }
+
     case 'SET_TEST': {
       if (action.origin !== 'EDITOR') {
         exec({ type: 'UPDATE_EDITOR', editor: 'test' });
@@ -183,7 +197,7 @@ function reducer(state, action, exec) {
       };
     }
     case 'EVALUATE': {
-      exec({ type: 'UPDATE_SANDBOX', immediate });
+      exec({ type: 'UPDATE_SANDBOX', immediate, manualInvocation: true });
       return state;
     }
 
@@ -246,6 +260,7 @@ const populateSandbox = (state, effect, dispatch) => {
     query: state.settings.autoRun || effect.immediate ? state.query : '',
     test: state.settings.autoRun || effect.immediate ? state.test : '',
     isTest: state.tab === 'Test',
+    manualInvocation: effect.manualInvocation,
   });
 };
 
@@ -428,7 +443,9 @@ function usePlayground(props) {
 
   // propagate sandbox ready/busy events to playground state
   useEffect(() => {
-    const listener = ({ data: { source, type, result } }) => {
+    const listener = ({
+      data: { source, type, result, manualInvocation, hideTestResult },
+    }) => {
       if (source !== 'testing-playground-sandbox') {
         return;
       }
@@ -436,6 +453,12 @@ function usePlayground(props) {
       if (type === 'SANDBOX_READY') {
         dispatch({ type: 'SET_STATUS', status: 'idle' });
         dispatch({ type: 'SET_RESULT', result });
+        if (manualInvocation) {
+          dispatch({ type: 'SET_SHOW_TEST_RESULT' });
+        }
+        if (hideTestResult) {
+          dispatch({ type: 'HIDE_SHOW_TEST_RESULT' });
+        }
       } else if (type === 'SANDBOX_BUSY') {
         dispatch({ type: 'SET_STATUS', status: 'evaluating' });
       }

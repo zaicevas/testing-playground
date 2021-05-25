@@ -4,6 +4,11 @@ import { queries as supportedQueries } from './constants';
 import cssPath from './lib/cssPath';
 import deepEqual from './lib/deepEqual';
 import { getAllPossibleQueries } from './lib/queryAdvise';
+import expect from 'jest-matchers';
+
+window.expect = expect;
+
+require('@testing-library/jest-dom');
 
 import {
   getQueriesForElement,
@@ -14,6 +19,8 @@ import {
 } from '@testing-library/dom';
 
 import userEvent from '@testing-library/user-event';
+
+window.userEvent = userEvent;
 
 // Patch RegeXP so we have a (better) way to serialize for message transport
 RegExp.prototype.toJSON = function () {
@@ -98,6 +105,7 @@ function createEvaluator({ rootNode }) {
     screen: getScreen(rootNode),
     userEvent,
     user: userEvent,
+    expect,
     container: rootNode,
     within: getQueriesForElement,
   });

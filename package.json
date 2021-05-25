@@ -54,6 +54,7 @@
     "deep-diff": "^1.0.2",
     "dom-accessibility-api": "^0.4.7",
     "isomorphic-fetch": "^2.2.1",
+    "jest-matchers": "^20.0.3",
     "js-beautify": "^1.13.0",
     "lodash.debounce": "4.0.8",
     "lodash.throttle": "^4.1.1",

@@ -31,7 +31,7 @@ function postMessage(action) {
 
 function runQuery(rootNode, query) {
   const result = parser.parse({ rootNode, query });
-  const { elements, expression, formatted } = result;
+  const { elements, expression, formatted, error } = result;
   const selector = elements.map((x) => x.cssPath).join(', ');
 
   state.queriedNodes =
@@ -52,6 +52,7 @@ function runQuery(rootNode, query) {
     expression,
     formatted,
     accessibleRoles,
+    error,
   };
 }
 
@@ -162,16 +163,16 @@ function onSelectNode(node, { origin }) {
     // need to inform the state manager. Complete the update
     state.query = action.suggestion.snippet;
     const result = runQuery(state.rootNode, state.query);
-    postMessage({ type: 'SANDBOX_READY', result });
+    postMessage({ type: 'SANDBOX_READY', result, hideTestResult: true });
   }
 }
 
-function updateSandbox(rootNode, markup, query) {
+function updateSandbox(rootNode, markup, query, manualInvocation) {
   postMessage({ type: 'SANDBOX_BUSY' });
   setInnerHTML(rootNode, markup);
 
   const result = runQuery(rootNode, query);
-  postMessage({ type: 'SANDBOX_READY', result });
+  postMessage({ type: 'SANDBOX_READY', result, manualInvocation });
 }
 
 function onMessage({ source, data }) {
@@ -195,14 +196,19 @@ function onMessage({ source, data }) {
   }
 
   if (!data.isTest) {
-    updateSandbox(state.rootNode, state.markup, state.query);
+    updateSandbox(state.rootNode, state.markup, state.query, false);
     return;
   }
 
   const lines = state.test.split('\n');
   const testWithoutItBlock = lines.slice(1, lines.length - 1).join('\n');
 
-  updateSandbox(state.rootNode, state.markup, testWithoutItBlock);
+  updateSandbox(
+    state.rootNode,
+    state.markup,
+    testWithoutItBlock,
+    data.manualInvocation,
+  );
 }
 
 window.addEventListener('message', onMessage, false);

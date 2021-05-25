@@ -20,7 +20,7 @@ function Paper({ children }) {
 }
 
 function PlaygroundPanels({ state, dispatch }) {
-  const { query, result, test } = state;
+  const { query, result, test, showTestResult } = state;
   const [panel, setPanel] = useState(panels[2]);
 
   return (
@@ -66,7 +66,8 @@ function PlaygroundPanels({ state, dispatch }) {
               <UserEventSuggestions
                 result={result}
                 dispatch={dispatch}
-                isTestStarted={!!state.test}
+                isTestStarted={!!test}
+                showTestResult={showTestResult}
               />
             </div>
           </Paper>

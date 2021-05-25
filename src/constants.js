@@ -108,7 +108,7 @@ export const userEventQueries = [
   {
     name: 'dblClick',
     desc: 'Clicks element twice',
-    code: 'userEvent.dbClick(:query)',
+    code: 'userEvent.dblClick(:query)',
   },
   {
     name: 'type',

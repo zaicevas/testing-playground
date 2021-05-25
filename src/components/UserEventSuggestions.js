@@ -1,14 +1,39 @@
 import React from 'react';
-import ErrorBox from './ErrorBox';
 import EmptyPane from './EmptyPane';
 import UserEventSuggestedQueries from './UserEventSuggestedQueries';
 import UserEventResultSuggestion from './UserEventResultSuggestion';
 import Scrollable from './Scrollable';
+import TestResult from './TestResult';
 
-function UserEventSuggestions({ result, dispatch, isTestStarted }) {
-  if (result?.error) {
+function UserEventSuggestions({
+  result,
+  dispatch,
+  isTestStarted,
+  showTestResult,
+}) {
+  const error = result?.error?.message;
+
+  if (error && showTestResult) {
     return (
-      <ErrorBox caption={result.error.message} body={result.error.details} />
+      <div className="flex flex-col w-full h-full overflow-hidden">
+        <Scrollable>
+          <div className="pb-4 border-b">
+            <TestResult error={error} />
+          </div>
+        </Scrollable>
+      </div>
+    );
+  }
+
+  if (!error && showTestResult) {
+    return (
+      <div className="flex flex-col w-full h-full overflow-hidden">
+        <Scrollable>
+          <div className="pb-4 border-b">
+            <TestResult />
+          </div>
+        </Scrollable>
+      </div>
     );
   }
 

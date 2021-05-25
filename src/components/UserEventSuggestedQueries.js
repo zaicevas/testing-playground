@@ -20,6 +20,7 @@ const Field = React.memo(function Field({
   method,
   resultQuery,
   isTestStarted,
+  isExpect,
 }) {
   const handleClick = (input) => {
     if (!isTestStarted) {
@@ -43,11 +44,19 @@ const Field = React.memo(function Field({
   if (!withInput) {
     return (
       <div
-        className={`text-xs field ${active ? 'active' : ''}`}
+        className={`text-xs field ${active ? 'active' : ''} ${
+          isExpect ? 'bg-red-600' : ''
+        }`}
         data-clickable
         onClick={handleClick}
       >
-        <div className="font-light text-gray-800">{name}</div>
+        <div
+          className={`font-light ${
+            isExpect ? 'text-red-800' : 'text-gray-800'
+          }`}
+        >
+          {name}
+        </div>
         <div className="truncate">{desc}</div>
       </div>
     );
@@ -77,6 +86,7 @@ function QueryGroup({
   dispatch,
   resultQuery,
   isTestStarted,
+  isExpectGroup,
 }) {
   return (
     <Section>
@@ -92,6 +102,7 @@ function QueryGroup({
           dispatch={dispatch}
           active={true}
           resultQuery={resultQuery}
+          isExpect={isExpectGroup}
         />
       ))}
     </Section>
@@ -100,6 +111,13 @@ function QueryGroup({
 
 const userEventQueriesLeft = userEventQueries.slice(0, 6);
 const userEventQueriesRight = userEventQueries.slice(6);
+const expects = [
+  {
+    name: 'expect().toBeInTheDocument',
+    desc: 'Expects the DOM to contain the element',
+    code: 'expect(:query).toBeInTheDocument()',
+  },
+];
 
 function UserEventSuggestedQueries({ dispatch, resultQuery, isTestStarted }) {
   return (
@@ -116,6 +134,15 @@ function UserEventSuggestedQueries({ dispatch, resultQuery, isTestStarted }) {
           queries={userEventQueriesRight}
           dispatch={dispatch}
           resultQuery={resultQuery}
+        />
+      </div>
+      <div className="space-y-8 pt-4">
+        <QueryGroup
+          isTestStarted={isTestStarted}
+          queries={expects}
+          dispatch={dispatch}
+          resultQuery={resultQuery}
+          isExpectGroup
         />
       </div>
     </div>
