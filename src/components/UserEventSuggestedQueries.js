@@ -69,7 +69,14 @@ const Field = React.memo(function Field({
           className={`text-xs field ${active ? 'active' : ''}`}
           data-clickable
         >
-          <div className="font-light text-gray-800">{name}</div>
+          <div
+            className={`font-light ${
+              isExpect ? 'text-red-800' : 'text-gray-800'
+            }`}
+          >
+            {' '}
+            {name}
+          </div>
           <div className="truncate">{desc}</div>
         </div>
       </ModalOpenButton>
@@ -111,11 +118,19 @@ function QueryGroup({
 
 const userEventQueriesLeft = userEventQueries.slice(0, 6);
 const userEventQueriesRight = userEventQueries.slice(6);
-const expects = [
+const expectsLeft = [
   {
     name: 'expect().toBeInTheDocument',
     desc: 'Expects the DOM to contain the element',
     code: 'expect(:query).toBeInTheDocument()',
+  },
+];
+const expectsRight = [
+  {
+    name: 'expect(text).toBeInTheDocument',
+    desc: 'Expects the DOM to contain text',
+    code: "expect(screen.getByText(':input')).toBeInTheDocument()",
+    withInput: true,
   },
 ];
 
@@ -139,7 +154,16 @@ function UserEventSuggestedQueries({ dispatch, resultQuery, isTestStarted }) {
       <div className="space-y-8 pt-4">
         <QueryGroup
           isTestStarted={isTestStarted}
-          queries={expects}
+          queries={expectsLeft}
+          dispatch={dispatch}
+          resultQuery={resultQuery}
+          isExpectGroup
+        />
+      </div>
+      <div className="space-y-8 pt-4">
+        <QueryGroup
+          isTestStarted={isTestStarted}
+          queries={expectsRight}
           dispatch={dispatch}
           resultQuery={resultQuery}
           isExpectGroup

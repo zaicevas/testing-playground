@@ -443,9 +443,7 @@ function usePlayground(props) {
 
   // propagate sandbox ready/busy events to playground state
   useEffect(() => {
-    const listener = ({
-      data: { source, type, result, manualInvocation, hideTestResult },
-    }) => {
+    const listener = ({ data: { source, type, result, manualInvocation } }) => {
       if (source !== 'testing-playground-sandbox') {
         return;
       }
@@ -455,8 +453,7 @@ function usePlayground(props) {
         dispatch({ type: 'SET_RESULT', result });
         if (manualInvocation) {
           dispatch({ type: 'SET_SHOW_TEST_RESULT' });
-        }
-        if (hideTestResult) {
+        } else {
           dispatch({ type: 'HIDE_SHOW_TEST_RESULT' });
         }
       } else if (type === 'SANDBOX_BUSY') {

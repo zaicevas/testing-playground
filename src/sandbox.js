@@ -170,7 +170,7 @@ function onSelectNode(node, { origin }) {
     // need to inform the state manager. Complete the update
     state.query = action.suggestion.snippet;
     const result = runQuery(state.rootNode, state.query);
-    postMessage({ type: 'SANDBOX_READY', result, hideTestResult: true });
+    postMessage({ type: 'SANDBOX_READY', result });
   }
 }
 
