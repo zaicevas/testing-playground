@@ -272,7 +272,7 @@ function Editor(props) {
         },
         ...(options[mode].extraKeys || {}),
       },
-      readOnly: isTest,
+      readOnly: false,
       hintOptions:
         !isTest && mode === 'javascript' ? { hint: getQueryHints } : undefined,
     });

@@ -14,14 +14,15 @@ function QueryEditor(props) {
   );
 
   const onChange = useCallback(
-    (query, { origin }) =>
+    (query, { origin }) => {
       dispatch({
-        type: isTest ? 'SET_TEST' : 'SET_QUERY',
+        type: isTest ? 'UPDATE_TEST' : 'SET_QUERY',
         query: isTest ? '' : query,
         test: isTest ? query : '',
         origin: 'EDITOR',
         immediate: origin === 'user',
-      }),
+      });
+    },
     [dispatch, isTest],
   );
 

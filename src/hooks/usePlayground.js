@@ -145,6 +145,22 @@ function reducer(state, action, exec) {
       };
     }
 
+    case 'UPDATE_TEST': {
+      if (action.origin !== 'EDITOR') {
+        exec({ type: 'UPDATE_EDITOR', editor: 'test' });
+      }
+
+      if (action.origin !== 'SANDBOX') {
+        exec({ type: 'UPDATE_SANDBOX', immediate });
+      }
+
+      return {
+        ...state,
+        dirty: true,
+        test: action.test,
+      };
+    }
+
     case 'ADD_TEST_QUERY': {
       if (action.origin !== 'EDITOR') {
         exec({ type: 'UPDATE_EDITOR', editor: 'test' });
