@@ -127,13 +127,7 @@ function reducer(state, action, exec) {
     }
 
     case 'SET_TEST': {
-      if (action.origin !== 'EDITOR') {
-        exec({ type: 'UPDATE_EDITOR', editor: 'test' });
-      }
-
-      if (action.origin !== 'SANDBOX') {
-        exec({ type: 'UPDATE_SANDBOX', immediate });
-      }
+      exec({ type: 'UPDATE_EDITOR', editor: 'test' });
 
       const test = `it('${action.test}', () => {
 })`;
